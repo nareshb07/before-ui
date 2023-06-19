@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind-cli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% load static %}
+   
+  </head>
+  <body>
+    <div class="relative flex min-h-screen flex-col">
+      <!-- Ribbon -->
+      <div class="h-14 w-full bg-sky-300">
+        <h1 class="text-white">hello</h1>
+      </div>
+
+      <div class="flex flex-1 flex-row">
+        <!-- Vertical Navigation Bar -->
+        <div class="hidden bg-gray-600 font-bold text-white sm:block sm:w-72">
+          <ul class="py-4">
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Home</li>
+            <a href = "#"><li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Search</li></a>
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Services</li>
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Contact</li>
+          </ul>
+        </div>
+
+        <div class="relative flex-1 bg-sky-200 px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+          <div class="mx-auto max-w-xl">
+            <!-- Search box --> 
+            <div class="flex items-start justify-center -mt-8">
+                <div class="relative">
+                  <input class="w-56 sm:w-96 rounded-full h-10 pl-10 pr-3 text-center" type="text" id="searchInput" placeholder="&#8203;Enter your search query">
+                      <div class="absolute top-0 left-0 flex items-center h-full pl-3 pointer-events-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" class="h-6 w-6 text-gray-500">
+                        <path d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path>
+                        </svg>
+                      </div>
+                </div>
+          </div>
+          <!--- Search Box ends Here -->
+          <div class="h-5">  </div>
+
+         <!-- search result -->
+            
+            <div id = "searchResults">
+                <div class="h-16 w-16"></div>
+          </div>
+            <!-- Here javascript takes over -->
+            <!-- search result ends here -->
+
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% block javascript %}
+
+    <script src="{% static 'js/search_users.js' %}"></script>
+    {% endblock %}
+ 
+  </body>
+</html>

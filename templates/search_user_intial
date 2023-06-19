@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Search</title>
+    {% load static %}
+</head>
+<body>
+    <h1>User Search</h1>
+    <input type="text" id="searchInput" placeholder="Enter your search query">
+    <hr>
+    <div id="searchResults"></div>
+{% block javascript %}
+    <script src="{% static 'js/search_users.js' %}"></script>
+{% endblock %}
+</body>
+</html>

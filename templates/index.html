@@ -1,0 +1,46 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+
+{% block title %}WhatsApp{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="back-container">
+    <div class="container-fluid front-container">
+        <div class="back-top"></div>
+        <div class="back-main"></div>
+    </div>
+    <div class="container front-container1">
+        <div class="row">
+            <div class="col-sm-4 contacts">
+                <div class="contact-table-scroll">
+                    <table class="table table-hover">
+                        <tbody>
+                            {% for friend in friends %}
+                            <tr>
+                                <td><img src="{{friend.Follower.image.url}}" alt="" class="profile-image rounded-circle">
+                                </td>
+                                {% if friend.message_seen == True %}
+                                <td><a href="{% url 'chatPage' id=friend.Follower_id %}">{{friend.Follower.first_name}}</a></td>
+                                {% else %} 
+                                <td><b><a href="{% url 'chatPage' id=friend.Follower_id %}">{{friend.Follower.first_name}}</a></b></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+
+                            <!-- end -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

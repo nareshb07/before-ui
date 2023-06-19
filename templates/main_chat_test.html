@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="/static/css/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.9/draggable.min.js"></script>
+    {% load static %}
+    
+    {% load custom_filters %}
+  </head>
+  <body>
+    <main class="relative flex min-h-screen flex-col bg-slate-800">
+      <!-- top ribbon  -->
+      <div class="h-14 w-full bg-slate-900">
+        <div class="sm:hidden">
+          <button id="mobile-menu-icon" class="cursor-pointer" onclick="open_menu()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ml-5 mt-3 h-8" viewBox="0 0 448 512"><path fill="#FFFFFF" d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" /></svg>
+          </button>
+
+          <button id="cancel-icon" class="fixed inset-x-0 hidden cursor-pointer" onclick="close_menu()">
+            <svg fill="#FFFFFF" class="ml-5 mt-3 h-9" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" /></svg>
+          </button>
+
+          <!-- modal nav bar for mobile -->
+          <div id="mobile-nav-bar" class="fixed inset-0 z-50 mt-14 hidden h-screen w-1/3 bg-slate-900 text-center text-xl font-bold text-white opacity-80">
+            <ul class="py-4">
+              <li class="border-b border-gray-700 px-4 py-5 hover:bg-white hover:text-black">Home</li>
+              <li class="border-b border-gray-700 px-4 py-5 hover:bg-white hover:text-black">Search</li>
+              <li class="border-b border-gray-700 px-4 py-5 hover:bg-white hover:text-black">Profile</li>
+              <li class="border-b border-gray-700 px-4 py-5 hover:bg-white hover:text-black">Logout</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--end of top ribbon  -->
+
+      <!-- whole main content -->
+      <div class="flex flex-1 flex-row">
+        <!-- Vertical Navigation Bar -->
+        <div class="hidden bg-slate-800 font-bold text-white shadow-sm shadow-slate-600 sm:block sm:w-[20%]">
+          <ul class="py-4">
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Home</li>
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">About</li>
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Services</li>
+            <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Contact</li>
+          </ul>
+        </div>
+        <!-- Vertical Navigation Bar -->
+
+        <!-- section 2 -->
+        <div class="hidden w-full bg-slate-800 shadow-sm shadow-slate-600 sm:block sm:w-[25%]">
+          <!-- search bar section -->
+          <div class="mt-3 flex items-start justify-center">
+            <div class="relative">
+              <input class="h-10 w-full rounded-full pl-3 pr-3 text-center placeholder:text-sm sm:w-[90%]" type="text" id="searchInput" placeholder="&#8203;Enter your Username" />
+              <div class="pointer-events-none absolute left-0 top-0 flex h-full items-center pl-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 101 101" class="h-6 w-6 text-gray-500">
+                  <path d="M63.3 59.9c3.8-4.6 6.2-10.5 6.2-17 0-14.6-11.9-26.5-26.5-26.5S16.5 28.3 16.5 42.9 28.4 69.4 43 69.4c6.4 0 12.4-2.3 17-6.2l20.6 20.6c.5.5 1.1.7 1.7.7.6 0 1.2-.2 1.7-.7.9-.9.9-2.5 0-3.4L63.3 59.9zm-20.4 4.7c-12 0-21.7-9.7-21.7-21.7s9.7-21.7 21.7-21.7 21.7 9.7 21.7 21.7-9.7 21.7-21.7 21.7z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <!-- end of search bar section  -->
+
+          <!-- chatlist user section -->
+          <div class="flex flex-col justify-center">
+            <ul class="py-7">
+              {% for user in users %}
+              <a href = "{% url 'chatPage' id=user.Follower_id %}"><li class="border-t border-gray-700 px-4 py-2 text-center hover:bg-slate-700">
+                <div class="flex flex-row items-center">
+                  <img src="{{user.Follower.image.url}}" class="ml-5 h-14 w-14 flex-none rounded-full bg-black" />
+                  <div class="ml-5 text-start text-white">
+                    <p class="flex-none"><b>{{user.Follower.first_name}}</b> @{{user.Follower.username}}</p>
+                    <h1 class="text- mt-2">hell</h1>
+                  </div>
+                </div>
+              </li></a>
+              {% endfor %}
+            </ul>
+          </div>
+          <!--end of chatlist user section -->
+        </div>
+        <!-- end of section 2 -->
+
+        <!-- section 3 chatting area -->
+        <div class="relative flex-1 bg-slate-800 pb-20 shadow-md shadow-slate-700 ring-1 ring-slate-700 sm:mx-auto sm:block sm:w-[55%] sm:rounded-lg">
+          <!-- start of ribbon -->
+          <div class="flex flex-col items-center justify-center bg-slate-900 py-5 font-bold text-white backdrop-blur-sm">
+            <img src="{{ user.image.url  }}" class="h-10 w-10 rounded-full bg-slate-300" />
+            <h1>{{user.first_name}}</h1>
+            <h2>@{{user.username}}</h2>
+          </div>
+          <!-- end of ribbon -->
+
+          <!-- message input area -->
+          <div class="fixed bottom-0 flex w-full justify-between rounded-lg bg-slate-900 sm:w-[55%]">
+            <form id="file-upload-form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+              <label for="fileInput" class="flex items-center justify-center rounded-md cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="ml-4 mt-6 h-6 w-6" viewBox="0 0 512 512">
+                  <path fill="#ffffff" d="M448 80c8.8 0 16 7.2 16 16V415.8l-5-6.5-136-176c-4.5-5.9-11.6-9.3-19-9.3s-14.4 3.4-19 9.3L202 340.7l-30.5-42.7C167 291.7 159.8 288 152 288s-15 3.7-19.5 10.1l-80 112L48 416.3l0-.3V96c0-8.8 7.2-16 16-16H448zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 192a48 48 0 1 0 0-96 48 48 0 1 0 0 96z" />
+                </svg>
+              </label>
+              <input type="file" name="fileInput" id="fileInput" class="hidden" accept="image/*, audio/* , .mp4 ,.avi ,.mov, application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, text/plain">
+            </form>
+          
+            <input type="text" id="message_input" class="mx-5 my-4 h-10 w-full rounded-2xl px-8 placeholder:px-4"  placeholder="Write message..." />
+          
+            <div>
+              <svg id="chat-message-submit" xmlns="http://www.w3.org/2000/svg" class="my-4 mr-4 h-10 w-10 hover:rounded-lg hover:bg-slate-400" viewBox="0 0 256 256" id="paper-plane-right">
+                <path fill="#ffffff" d="M223.44434,114.03906,54.5293,19.44727A16.00042,16.00042,0,0,0,31.64355,38.78906L60.64746,120H136a8,8,0,0,1,0,16H60.64746L31.64355,217.21094a16.0398,16.0398,0,0,0,15.041,21.4082,16.039,16.039,0,0,0,7.8457-2.06641l168.91309-94.59179a16.00165,16.00165,0,0,0,.001-27.92188Z"></path>
+              </svg>
+            </div>
+          </div>
+          
+          <!-- end of message input area -->
+
+          <!-- messaging area  -->
+        
+        <div class="flex overflow-y-auto pt-20 pb-2 items-end bg-slate-800 w-full h-[33rem] ">
+              <!-- Your content here -->
+          <div id = "chat-body" class="flex flex-col w-full max-h-full"> 
+            {% for msg in msgs %}
+            {% if msg.file %}
+            {% if msg.sender == request.user.first_name %}
+
+                {% if msg.file.name|lower|endswith:'.jpg' or msg.file.name|lower|endswith:'.jpeg' or msg.file.name|lower|endswith:'.png' %}
+                  <div class="flex justify-end mb-5 ">
+                    <div class="flex flex-col">
+                    <div class="mr-6 overflow-hidden bg-slate-900 rounded-2xl text-white"><img class="max-w-[15rem] max-h-[16rem] sm:max-w-md " alt = "image" src = "{{ msg.file.url }}"></div>
+                    <code class="flex justify-end mr-5 text-[80%]  text-white"> {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                  </div>
+                {% elif msg.file.name|lower|endswith:'.mp4' or msg.file.name|lower|endswith:'.avi' or msg.file.name|lower|endswith:'.mov' %}
+                    <div class="flex justify-end mb-5 ">
+                      <div class="flex flex-col">
+                      <div class="mr-5 overflow-hidden bg-slate-900 rounded-2xl text-white"><video class = "max-w-xs max-h-xs sm:max-h-md sm:max-w-md bg-white" controls>
+                        <source src="{{ msg.file.url }}" type="{{ msg.file.content_type }}" >
+                        Your browser does not support the video tag.
+                    </video></div>
+                    <code class="flex justify-end mr-5 text-[80%]  text-white"> {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                    </div>
+                {% elif msg.file.name|lower|endswith:'.pdf' or msg.file.name|lower|endswith:'.doc' or msg.file.name|lower|endswith:'.docx' %}
+                    <div class="flex justify-end mb-5 ">
+                      <div class="flex flex-col">
+                      <div class="mr-2 rounded-s-3xl rounded-br-lg rounded-tr-3xl bg-slate-900 px-4 py-2 text-white"><a href="{{ msg.file.url }}" target="_blank">{{ msg.file.name }}</a></div>
+                      <code class="flex justify-end mr-5 text-[80%]  text-white"> {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                  </div>
+                {% else %}
+                    <div class="flex justify-end mb-5 ">
+                      <div class="flex flex-col">
+                      <div class="mr-2 rounded-s-3xl rounded-br-lg rounded-tr-3xl bg-slate-900 px-4 py-2 text-white"><a href="{{ msg.file.url }}" download>{{ msg.file.name }}</a></div>
+                      <code class="flex justify-end mr-5 text-[80%]  text-white"> {{ msg.timestamp|time:'H:i' }}  </code>
+                    </div>
+                  </div>
+                  {% endif %}
+            {% else %}
+
+                  {% if msg.file.name|lower|endswith:'.jpg' or msg.file.name|lower|endswith:'.jpeg' or msg.file.name|lower|endswith:'.png' %}
+                  <div class="flex justify-start mb-5 ">
+                    <div class="flex flex-col">
+                      <div class="ml-3 overflow-hidden bg-sky-200 rounded-2xl text-white"><img class="w-44 h-44 " alt = "image" src = "https://picsum.photos/seed/picsum/200/300"></div>
+                      <code class="text-[80%] flex   ml-5 text-white"> {{ msg.timestamp|time:'H:i' }}  </code>
+                    </div>
+                  </div>
+                {% elif msg.file.name|lower|endswith:'.mp4' or msg.file.name|lower|endswith:'.avi' or msg.file.name|lower|endswith:'.mov' %}
+                    <div class="flex justify-start mb-5">
+                      <div class="flex flex-col">
+                      <div class=" ml-3 overflow-hidden bg-sky-200 rounded-2xl text-white"><video class = "h-56 w-56" controls>
+                        <source src="{{ msg.file.url }}" type="{{ msg.file.content_type }}" >
+                        Your browser does not support the video tag.
+                    </video></div>
+                    <code class="flex text-[80%] ml-5 text-white"> {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                    </div>
+                {% elif msg.file.name|lower|endswith:'.pdf' or msg.file.name|lower|endswith:'.doc' or msg.file.name|lower|endswith:'.docx' %}
+                    <div class="flex justify-start mb-5 ">
+                      <div class="flex flex-col">
+                      <div class="ml-2 rounded-s-3xl rounded-br-lg rounded-tr-3xl bg-slate-900 px-4 py-2 text-white"><a href="{{ msg.file.url }}" target="_blank">{{ msg.file.name }}</a></div>
+                      <code class="flex  ml-5 text-[80%] text-white">  {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                  </div>
+                {% else %}
+                    <div class="flex justify-end mb-5 ">
+                      <div class="flex flex-col">
+                      <div class="ml-2 rounded-s-3xl rounded-br-lg rounded-tr-3xl bg-slate-900 px-4 py-2 text-white"><a href="{{ msg.file.url }}" download>{{ msg.file.name }}</a></div>
+                      <code class="flex ml-5 text-[80%]  text-white">  {{ msg.timestamp|time:'H:i' }} </code>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% endif %}
+            {% else %}
+
+            {% if msg.sender == request.user.first_name %}
+
+            <div class="flex justify-end mb-5 ">
+              <div class="flex flex-col">
+              <p class="mr-6 rounded-s-3xl rounded-br-lg rounded-tr-3xl bg-slate-900 px-4 py-2 text-white">{{ msg.message }}</p>
+              <code class="flex justify-end mr-5 text-[80%] mt-0 text-white">  {{ msg.timestamp|time:'H:i' }}</code>
+            </div>
+            </div>
+
+            {% else %}
+
+            <div class="flex justify-start mb-5 ">
+              <div class="flex flex-col">
+              <p class=" ml-2 max-w-[70%]  rounded-e-3xl rounded-bl-lg rounded-tl-3xl bg-sky-200 px-4 py-2 text-base text-black">{{ msg.message }}</p>
+              <code class="text-[80%] flex mt-0 ml-5 text-white"> {{ msg.timestamp|time:'H:i' }}</code>
+              </div>
+            </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %} 
+          </div>
+        </div>
+
+          
+
+        
+        <!--end of messaging area  -->
+      </div>
+    </main>
+  </body>
+
+{{user.id|json_script:"json-username"}}
+{{user.id|json_script:"json-username-receiver"}}
+
+{{request.user.first_name|json_script:"json-message-username"}}
+
+
+{% block javascript %}
+
+<script src="{% static 'js/chat.js' %}"></script>
+
+<script src="{% static 'js/chat_function.js' %}"></script> 
+
+{% endblock %}
+
+</html>
