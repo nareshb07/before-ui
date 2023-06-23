@@ -212,7 +212,7 @@ EMAIL_HOST = 'smtp-relay.sendinblue.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'mindsetmatters30@gmail.com'
-EMAIL_HOST_PASSWORD = '57aAp6sf4HSNmOUz'
+EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxxxxx'
 
 
 AUTHENTICATION_BACKENDS = [
@@ -283,9 +283,9 @@ PAYTM_WEBSITE = 'WEBSTAGING'  # Change it to 'DEFAULT' in production
 
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_ACCESS_KEY_ID = 'AKIA5OL74EB75LR3MDFJ'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'nareshdjagnotest'
+AWS_ACCESS_KEY_ID = 'xxxxxxxxxxxxx'
+AWS_SECRET_ACCESS_KEY = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx'
+AWS_STORAGE_BUCKET_NAME = 'xxxxxxxxxxxxxxx'
 AWS_S3_REGION_NAME = 'ap-south-1'  # e.g., 'us-west-2'
 
 
